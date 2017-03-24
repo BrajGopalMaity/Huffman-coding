@@ -120,9 +120,14 @@ void bHeap(){
 		binHeap.push_back(temp);
 		heapAgain(binHeap.size()-1);		
 	}
-	//root = &binHeap[binHeap.size()-1];
-	//root->code = "0";
-	//codify(root,"");
-	//printTree(root);		
+	root = &binHeap[binHeap.size()-1];
+	root->code = "";
+	codify(root,"");
+	printTree(root);		
+}	
+
+int main(){
+	bHeap();
+	return 0;
 }
 
