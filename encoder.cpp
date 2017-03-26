@@ -5,6 +5,8 @@
 #include<vector>
 #include<sstream>
 #include<limits>
+#include<unordered_map>
+#include<bitset>
 
 using namespace std;
 
@@ -19,7 +21,6 @@ typedef struct foheap{
 }foheap;
 
 vector<foheap> fourHeap;
-string buffer = "";
 string dat="";
 ofstream opfile ("code_table.txt");
 
@@ -75,7 +76,6 @@ void fprintTree(foheap *node){
 	int n = INT_MIN;
 	if(node != NULL){
 		if(node->data != n)
-			//dat += node->data;
 			opfile << node->data <<" "<< node->code <<endl;
 		fprintTree(node->left);	
 		fprintTree(node->right);
@@ -83,10 +83,8 @@ void fprintTree(foheap *node){
 }
 
 void fcodify(foheap *node,string c){
-	if(node->left == NULL && node->right == NULL){
+	if(node->left == NULL && node->right == NULL)
 		node->code = c+node->code;
-		buffer += node->code;
-		}
 	if(node->left != NULL && node->right != NULL){
 		fcodify(node->left, c+node->code);
 		fcodify(node->right, c+node->code);		
@@ -133,17 +131,60 @@ void fHeap(){
 		fheapAgain(fourHeap.size()-1);		
 	}	
 	root = &fourHeap[fourHeap.size()-1];
-	root->code = "0";
+	root->code = "";
 	fcodify(root,"");
 	fprintTree(root);
 	opfile.close();	
 }
 
-int main(){
+int main(int argc, char* argv[]){
 	fHeap();
+	string s,cc="",cd;
+	string num;
+	int j = 0,i;
+	size_t sz;
+	bitset<8> bt;
+	unordered_map<string, string> map;
+	ifstream cfile("code_table.txt");
+	if(!cfile.is_open())
+		cout<<"Unable to open file\n";
+	else{
+		while(getline(cfile,s)){
+				istringstream(s) >> num >> cd;
+				map[num] = cd;
+			}
+		cfile.close();		
+	}		
+	ifstream sfile(argv[1]);
 	ofstream ofile ("encoded.bin", ios::out | ios::binary);
-	ofile.write ((char *)&buffer, sizeof(buffer));
-	ofile.close();
-	cout << dat;
+	if(!sfile.is_open())
+		cout<<"Unable to open file\n";	
+	else{
+		while(getline(sfile,s)){
+			if(s != ""){
+				istringstream(s) >> num;
+				cc += map[num];
+			}
+		}
+		for(i = 0; i < cc.size();i++){
+			if(cc[i] == '0')
+				bt.set(7-j,0);
+			else 
+				bt.set(7-j,1);		
+			j++; 							
+			if((i+1)%8 ==0){ 
+				ofile.write ((char*)&bt, sizeof(char));
+				j=0;
+			}
+		}
+		if(j != 0){
+			for(;j<8;j++){
+				bt.set(7-j,0);
+				ofile.write ((char*)&bt, sizeof(char));
+				}
+		}
+		ofile.close();
+		sfile.close();		
+	}
 	return 0;
 }	

@@ -68,7 +68,7 @@ void heapAgain(int i){
 	}
 }	
 
-void printTree(heap *node){
+/*void printTree(heap *node){
 	int n = INT_MIN;
 	if(node != NULL){
 		if(node->data != n)
@@ -87,7 +87,7 @@ void codify(heap *node,string c){
 	}
 		
 }
-
+*/
 void bHeap(){
 	string s;
 	int k = 0;
@@ -120,14 +120,9 @@ void bHeap(){
 		binHeap.push_back(temp);
 		heapAgain(binHeap.size()-1);		
 	}
-	root = &binHeap[binHeap.size()-1];
-	root->code = "";
-	codify(root,"");
-	printTree(root);		
+	//root = &binHeap[binHeap.size()-1];
+	//root->code = "";
+	//codify(root,"");
+	//printTree(root);		
 }	
-
-int main(){
-	bHeap();
-	return 0;
-}
 

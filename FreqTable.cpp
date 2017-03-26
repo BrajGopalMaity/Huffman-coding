@@ -7,11 +7,11 @@
 
 using namespace std;
 
-int main(){
+int main(int argc, char* argv[]){
 	string s;
 	vector<string> words;	
 	unordered_map <string, int> map;
-	ifstream file("sample_input_small.txt");
+	ifstream file(argv[1]);
 	if(!file.is_open())
 		cout<<"Unable to open file\n";
 	else{		
