@@ -18,7 +18,6 @@ class pheap{
 	pheap *child;	
 	pheap *left;
 	pheap *right;
-	string code;
 	public:
 		pheap(){
 			this->previous = NULL;
@@ -30,10 +29,7 @@ class pheap{
 		pheap* meld(pheap*,pheap*);
 		pheap* removeMin();
 		void put(pheap*);
-		void pairingheap();
-		void printTree(pheap*);
-		void codify(pheap*,string);
-						
+		void pairingheap();						
 };
 
 pheap *hp = NULL;
@@ -104,26 +100,6 @@ void pheap::put(pheap *temp){
 	size++;	
 }
 
-void pheap::printTree(pheap *node){
-	int n = INT_MIN;
-	if(node != NULL){
-		if(node->data != n)
-			cout << node->data <<" "<< node->t<<" "<< node->code <<endl;
-		printTree(node->left);	
-		printTree(node->right);
-	}	
-}
-
-void pheap::codify(pheap *node,string c){
-	if(node->left == NULL && node->right == NULL)
-		node->code = c+node->code;
-	if(node->left != NULL && node->right != NULL){
-		codify(node->left, c+node->code);
-		codify(node->right, c+node->code);		
-	}
-		
-}
-
 void pheap::pairingheap(){
 	string s;
 	int i;
@@ -135,7 +111,6 @@ void pheap::pairingheap(){
 		while(getline(ifile,s)){
 			temp = new pheap;
 			istringstream(s) >> temp->data >> temp->t;
-			temp->code = "";
 			put(temp);
 		}	 
 		ifile.close();
@@ -144,20 +119,13 @@ void pheap::pairingheap(){
 		h1 = removeMin();
 		h2 = removeMin();
 		size-=2;
-		h1->code = "0";
-		h2->code = "1";
-		cout <<"h1h2-->"<<h1->t<<h2->t<<endl;
 		tmp = new pheap;
 		tmp->data = INT_MIN;
 		tmp->t = h1->t + h2->t;
 		tmp->left = h1;
 		tmp->right = h2;
 		put(tmp);
-		}		
-	/*root = hp->child;
-	root->code = "0";
-	codify(root,"");
-	printTree(root);*/		
+		}				
 }
 
 void callpheap(){

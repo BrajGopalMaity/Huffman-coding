@@ -7,11 +7,11 @@
 
 using namespace std;
 
-int main(int argc, char* argv[]){
+void freqtable(string fl){
 	string s;
 	vector<string> words;	
 	unordered_map <string, int> map;
-	ifstream file(argv[1]);
+	ifstream file(fl);
 	if(!file.is_open())
 		cout<<"Unable to open file\n";
 	else{		
@@ -32,6 +32,5 @@ int main(int argc, char* argv[]){
 			ofile << x.second;
 			ofile << endl;	
 			}
-	}					
-	return 0;			
+	}								
 }

@@ -14,8 +14,7 @@ typedef struct foheap{
 	int data;
 	int t;
 	foheap *left;
-	foheap *right;	
-	string code;	
+	foheap *right;		
 }foheap;
 
 vector<foheap> fourHeap;
@@ -48,8 +47,6 @@ void fbuildHeap(){
 }
 
 foheap fextractMin(){
-	if (fourHeap.size() < 1)
-		cout << "foheap underflow\n";
 	foheap min = fourHeap[3];
 	fourHeap[3] = fourHeap[fourHeap.size()-1];
 	fourHeap.pop_back();
@@ -66,26 +63,6 @@ void fheapAgain(int i){
 			fheapAgain(parent);
 		}
 	}
-}
-
-void fprintTree(foheap *node){
-	int n = INT_MIN;
-	if(node != NULL){
-		if(node->data != n)
-			cout << node->data <<" "<< node->t<<" "<< node->code <<endl;
-		fprintTree(node->left);	
-		fprintTree(node->right);
-	}	
-}
-
-void fcodify(foheap *node,string c){
-	if(node->left == NULL && node->right == NULL)
-		node->code = c+node->code;
-	if(node->left != NULL && node->right != NULL){
-		fcodify(node->left, c+node->code);
-		fcodify(node->right, c+node->code);		
-	}
-		
 }
 
 void fHeap(){
@@ -105,7 +82,6 @@ void fHeap(){
 		while(getline(ifile,s)){
 			istringstream(s) >> temp.data >> temp.t;
 			temp.left = temp.right = NULL;
-			temp.code = "";
 			fourHeap.push_back(temp);
 		}	 
 		ifile.close();
@@ -117,18 +93,12 @@ void fHeap(){
 		h2 = new foheap();
 		*h1 = fextractMin();
 		*h2 = fextractMin();
-		h1->code = "0";
-		h2->code = "1";
 		temp.data = INT_MIN;
 		temp.t = h1->t + h2->t;
 		temp.left = h1;
 		temp.right = h2;
 		fourHeap.push_back(temp);
 		fheapAgain(fourHeap.size()-1);		
-	}	
-	//root = &fourHeap[fourHeap.size()-1];
-	//root->code = "0";
-	//fcodify(root,"");
-	//fprintTree(root);	
+	}		
 }
 

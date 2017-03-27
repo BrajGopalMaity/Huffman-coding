@@ -14,8 +14,7 @@ typedef struct heap{
 	int data;
 	int t;
 	heap *left;
-	heap *right;	
-	string code;	
+	heap *right;		
 }heap;
 
 vector<heap> binHeap;
@@ -48,8 +47,6 @@ void buildHeap(){
 }
 
 heap extractMin(){
-	if (binHeap.size() < 1)
-		cout << "Heap underflow\n";
 	heap min = binHeap[0];
 	binHeap[0] = binHeap[binHeap.size()-1];
 	binHeap.pop_back();
@@ -68,26 +65,6 @@ void heapAgain(int i){
 	}
 }	
 
-/*void printTree(heap *node){
-	int n = INT_MIN;
-	if(node != NULL){
-		if(node->data != n)
-			cout << node->data <<" "<< node->t<<" "<< node->code <<endl;
-		printTree(node->left);	
-		printTree(node->right);
-	}	
-}
-
-void codify(heap *node,string c){
-	if(node->left == NULL && node->right == NULL)
-		node->code = c+node->code;
-	if(node->left != NULL && node->right != NULL){
-		codify(node->left, c+node->code);
-		codify(node->right, c+node->code);		
-	}
-		
-}
-*/
 void bHeap(){
 	string s;
 	int k = 0;
@@ -99,7 +76,6 @@ void bHeap(){
 		while(getline(ifile,s)){
 			istringstream(s) >> temp.data >> temp.t;
 			temp.left = temp.right = NULL;
-			temp.code = "";
 			binHeap.push_back(temp);
 		}	 
 		ifile.close();
@@ -111,18 +87,12 @@ void bHeap(){
 		h2 = new heap();
 		*h1 = extractMin();
 		*h2 = extractMin();
-		h1->code = "0";
-		h2->code = "1";
 		temp.data = INT_MIN;
 		temp.t = h1->t + h2->t;
 		temp.left = h1;
 		temp.right = h2;
 		binHeap.push_back(temp);
 		heapAgain(binHeap.size()-1);		
-	}
-	//root = &binHeap[binHeap.size()-1];
-	//root->code = "";
-	//codify(root,"");
-	//printTree(root);		
+	}		
 }	
 

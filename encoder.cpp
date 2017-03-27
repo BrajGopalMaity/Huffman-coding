@@ -7,6 +7,7 @@
 #include<limits>
 #include<unordered_map>
 #include<bitset>
+#include "FreqTable.cpp"
 
 using namespace std;
 
@@ -53,7 +54,7 @@ void fbuildHeap(){
 
 foheap fextractMin(){
 	if (fourHeap.size() < 1)
-		cout << "foheap underflow\n";
+		cout << "Heap underflow\n";
 	foheap min = fourHeap[3];
 	fourHeap[3] = fourHeap[fourHeap.size()-1];
 	fourHeap.pop_back();
@@ -138,6 +139,7 @@ void fHeap(){
 }
 
 int main(int argc, char* argv[]){
+	freqtable(argv[1]);
 	fHeap();
 	string s,cc="",cd;
 	string num;

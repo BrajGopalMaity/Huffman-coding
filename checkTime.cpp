@@ -3,9 +3,11 @@
 #include "HuffmanBinHeap.cpp"
 #include "4wayHeap.cpp"
 #include "PairingHeap.cpp"
+#include "FreqTable.cpp"
 
-int main(){
+int main(int argc, char* argv[]){
 	clock_t start_time;
+	freqtable(argv[1]);
 	
 	// binary heap
 	start_time = clock();
